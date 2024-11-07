@@ -506,7 +506,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
 **Use Case 10 (UC10)**: Filter by Tag or RSVP Status<br>
 **MSS**:
->>>>>>> upstream/master
 
 1.  User enters the command to filter guest list.
 2.  The system prompts for the desired predicate.
@@ -569,7 +568,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Delete**: Removes a guest and all details regarding the guest from the address book
 * **Add**: Creates and saves a new guest into the address book
 * **Filter**: Only show guests that contains the text input by the user
-* **Filter panel**: Shows the current filter predicates applied to the list
+* **Filter Panel**: Shows the current filter predicates applied to the list
 * **New Tag**: Creates a new tag and adds it to the tag list
 * **Delete Tag**: Removes a tag from the tag list and all instances of it on all guests in the address book
 * **Remove Tag**: Removes a tag from guest but does not remove it from the tag list or other guests not specified

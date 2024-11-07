@@ -1,0 +1,127 @@
+'@startuml
+'!include style.puml
+'skinparam arrowThickness 1.1
+'skinparam arrowColor MODEL_COLOR
+'skinparam classBackgroundColor MODEL_COLOR
+''https://plantuml.com/object-diagram
+'
+'object "<u>modelManager:ModelManager" as modelManager
+'object "<u>userPrefs:UserPrefs" as userPrefs
+'object "<u>addressBook:AddressBook" as addressBook
+'object "<u>filteredPersons:FilteredList" as filteredList
+'object "<u>tagList:ObservableList" as tagList
+'object "<u>previousCommand:Command" as previousCommand
+'object "<u>bride's side:Tag" as tag1
+'object "<u>groom's side:Tag" as tag2
+'object "<u>uniquePersonList:UniquePersonList" as uniquePersonList
+'object "<u>tags:TagList" as tags
+'map "<u>:FilterCommand" as filterCommand {
+'
+'}
+'map "<u>:Set<Tags>" as tagSetAlex {
+'    tag => bride's side
+'}
+'map "<u>Alex Yeoh:Person" as alex {
+'    Name => Alex Yeoh
+'    RsvpStatus => Coming
+'    Phone => 92014226
+'    Email => alexyeoh@example.com
+'    Tags *--> tagSetAlex
+'}
+'map "<u>:Set<Tags>" as tagSetBernice {
+'    tag => groom's side
+'}
+'map "<u>Bernice Yu:Person" as bernice {
+'    name => Bernice Yu
+'    RsvpStatus => Pending
+'    Phone => 99272758
+'    Email => berniceyu@example.com
+'    Tags *-> tagSetBernice
+'}
+'
+'modelManager -left- userPrefs
+'modelManager -right- addressBook
+'modelManager -- tagList
+'modelManager -- previousCommand
+'previousCommand -- filterCommand
+'modelManager -- filteredList
+'addressBook -- uniquePersonList
+'addressBook -- tags
+'tagList -- tag1
+'tags -- tag1
+'tagList -- tag2
+'tags -- tag2
+'uniquePersonList -- alex
+'uniquePersonList -- bernice
+'filteredList -- alex
+'
+'
+'@enduml
+
+
+@startuml
+class ModelManager {
+    - addressBook: AddressBook
+    - userPrefs: UserPrefs
+    - filteredPersons: FilteredList<Person>
+    - tagList: ObservableList<Tag>
+    - previousCommand: Command
+    --
+    + setUserPrefs(ReadOnlyUserPrefs userPrefs)
+    + getUserPrefs(): ReadOnlyUserPrefs
+    + getAddressBook(): ReadOnlyAddressBook
+    + addPerson(Person person)
+    + deletePerson(Person target)
+    + addTag(Tag tag): boolean
+    + getFilteredPersonList(): ObservableList<Person>
+    + updateFilteredPersonList(Predicate<Person> predicate)
+    + updatePreviousCommand(Command nextCommand)
+    + getPreviousCommand(): Command
+}
+
+class AddressBook {
+    - personList: List<Person>
+    - tagList: ObservableList<Tag>
+    --
+    + getPersonList(): List<Person>
+    + addPerson(Person person)
+    + deletePerson(Person person)
+    + addTag(Tag tag): boolean
+    + getTagList(): ObservableList<Tag>
+}
+
+class UserPrefs {
+    - guiSettings: GuiSettings
+    - addressBookFilePath: Path
+    --
+    + getGuiSettings(): GuiSettings
+    + setGuiSettings(GuiSettings guiSettings)
+    + getAddressBookFilePath(): Path
+}
+
+class Person {
+    - name: String
+    - phone: String
+    - email: String
+    - rsvpStatus: String
+    - tags: Set<Tag>
+    --
+    + getTags(): Set<Tag>
+    + hasTag(Tag tag): boolean
+}
+
+class Tag {
+    - tagName: String
+    --
+    + setTagName(String newTagName)
+}
+
+ModelManager "1" --> "1" AddressBook
+ModelManager "1" --> "1" UserPrefs
+ModelManager "1" --> "1..*" Person : filteredPersons
+ModelManager "1" --> "1..*" Tag : tagList
+AddressBook "1" --> "1..*" Person : personList
+AddressBook "1" --> "1..*" Tag : tagList
+Person "1" --> "1..*" Tag : tags
+
+@enduml
