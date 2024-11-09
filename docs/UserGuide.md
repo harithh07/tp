@@ -178,6 +178,7 @@ Format: `deletetag [-force] t/TAG1…​`
 * If any guest currently has the tag `friends`, `deletetag t/friends` will not work. To force delete the tag and remove it from all guests, use `deletetag -force t/friends`.
 * Tag names are **case-insensitive**. e.g `deletetag t/BRIDE'S SIDE` is the same as `deletetag t/Bride's Side`.
 * Attempting to delete a mix of existing and non-existent tags at once will only allow the existing tags to be deleted.
+* After deleting a tag that is currently being filtered, the list will be empty. Type `list` to see the full list again.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 You may delete any number of tags at once. e.g. `deletetag t/bride's side t/groom's side t/friends`
